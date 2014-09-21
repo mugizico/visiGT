@@ -12,138 +12,166 @@
       $(document).foundation();
     </script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-
   </head>
+ 
   <body>
-				  <div class="row">
-				    <div class="large-6 medium-6">
-				      <label>Select Social Networks</label>
-				      <input type="radio" name="social-network" value="one" id="facebook"><label for="facebook">Facebook</label>
-				      <input type="radio" name="social-network" value="two" id="twitter"><label for="twitter">Twitter</label>
-              <input type="radio" name="social-network" value="three" id="pinterest"><label for="pinterest">Pinterest</label>
-				    </div>
-              <label>Select News Outlet</label>
-              <input type="radio" name="News" value="one" id="gizmodo"><label for="gizmodo">Gizmodo</label>
-              <input type="radio" name="News" value="two" id="mashable"><label for="mashable">Mashable</label>
-              <input type="radio" name="News" value="three" id="techcrunch"><label for="techcrunch">Techcrunch</label>
-              <input type="radio" name="News" value="four" id="bloomberg"><label for="bloomberg">Bloomberg</label>
-              <input type="radio" name="News" value="five" id="hpost"><label for="hpost">Huffington Post</label>
-              <input id="hpost" type="checkbox"><label for="hpost">Huffington Post</label>
-              <input id="bloomberg" type="checkbox"><label for="bloomberg">Bloomberg</label>
-            </div>
-				  </div>
+  <div class="right">
+    <table id="graph_style">
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="biPartite.js"></script>
+          <script>
+          var social_data=[
+          ['Facebook','Al Jazeera',45895, 45895],
+          ['Twitter','Al Jazeera',850, 850],
+          ['Google+','Al Jazeera',206812, 206812],
+          ['LinkedIn','Al Jazeera',55080, 55080],
+          ['Facebook','BBC',269019, 269019],
+          ['Twitter','BBC',9889, 9889],
+          ['Google+','BBC',286, 286],
+          ['LinkedIn','BBC',750, 750],
+          ['Facebook','Bloomberg',96831, 96831],
+          ['Twitter','Bloomberg',3, 3],
+          ['Google+','Bloomberg',102388, 102388],
+          ['LinkedIn','Bloomberg',262, 262],
+          ['Facebook','Engadget',23520, 23520],
+          ['Twitter','Engadget',29, 29],
+          ['Google+','Engadget',262738, 262738],
+          ['LinkedIn','Engadget',28570, 28570],
+          ['Facebook','ESPN',873058, 873058],
+          ['Twitter','ESPN',443, 443],
+          ['Google+','ESPN',709275, 709275],
+          ['LinkedIn','ESPN',15430, 15430],
+          ['Facebook','Forbes',39540, 39540],
+          ['Twitter','Forbes',31244, 31244],
+          ['Google+','Forbes',315308, 315308],
+          ['LinkedIn','Forbes',102130, 102130],
+          ['Facebook','Fox News',246304, 246304],
+          ['Twitter','Fox News',508, 508],
+          ['Google+','Fox News',169853, 169853],
+          ['LinkedIn','Fox News',35790, 35790],
+          ['Facebook','Gizmodo',26952, 26952],
+          ['Twitter','Gizmodo',821153, 821153],
+          ['Google+','Gizmodo',26392, 26392],
+          ['LinkedIn','Gizmodo',3010, 3010],
+          ['Facebook','Huffington Post',247900, 247900],
+          ['Twitter','Huffington Post',88, 88],
+          ['Google+','Huffington Post',306122, 306122],
+          ['LinkedIn','Huffington Post',28380, 28380],
+          ['Facebook','Mashable',11398, 11398],
+          ['Twitter','Mashable',149463, 149463],
+          ['Google+','Mashable',511673, 511673],
+          ['LinkedIn','Mashable',26840, 26840],
+          ['Facebook','The Onion',150776, 150776],
+          ['Twitter','The Onion',0, 0],
+          ['Google+','The Onion',233826, 233826],
+          ['LinkedIn','The Onion',3480, 3480],
+          ['Facebook','Reuters',32458, 32458],
+          ['Twitter','Reuters',346, 346],
+          ['Google+','Reuters',256883, 256883],
+          ['LinkedIn','Reuters',1250, 1250],
+          ['Facebook','TechCrunch',16114, 16114],
+          ['Twitter','TechCrunch',51577, 51557],
+          ['Google+','TechCrunch',624396, 624396],
+          ['LinkedIn','TechCrunch',21180, 21180],
+          ['Facebook','TIME',53980, 53980],
+          ['Twitter','TIME',82350, 82350],
+          ['Google+','TIME',661143, 661143],
+          ['LinkedIn','TIME',100000, 100000],
+          ['Facebook','USA Today',48980, 48980],
+          ['Twitter','USA Today',1933, 1933],
+          ['Google+','USA Today',188935, 188935],
+          ['LinkedIn','USA Today',1460, 1460],
+          ['Facebook','VentureBeat',1345, 1345],
+          ['Twitter','VentureBeat',31064, 31064],
+          ['Google+','VentureBeat',6303, 6305],
+          ['LinkedIn','VentureBeat',4000, 4000]
+          ];
+
+          function changeid ()
+          {
+          var e = document.getElementById("SocialNews");
+          e.id = "News Share";
+          }
+
+          var width = 1100, height = 610, margin ={b:0, t:40, l:170, r:50};
+
+          var svg = d3.select("body")
+            .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t))
+            .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
+
+          var data = [ 
+            {data:bP.partData(social_data,3), id:'SocialNews', header:["Media","News Source", "Social News"]}
+          ];
+
+          bP.draw(data, svg);
+
+          </script>
+      </table>
+  </div>
+    <div class="left" style="color: white">
+      <div class="row">
+        <div class="large-16 columns">
+          <h1><span style="color: #D4AF37">Visi</span>GT</h1>
+        </div>
       </div>
-    </div>  
-  </body>
-  <div>
-   <style>
-
-body {
-  font: 10px sans-serif;
-}
-
-.chord path {
-  fill-opacity: .67;
-  stroke: #000;
-  stroke-width: .5px;
-}
-
-</style>
-<script>
-
-var width = 720,
-    height = 720,
-    outerRadius = Math.min(width, height) / 2 - 10,
-    innerRadius = outerRadius - 24;
-
-var formatPercent = d3.format(".1%");
-
-var arc = d3.svg.arc()
-    .innerRadius(innerRadius)
-    .outerRadius(outerRadius);
-
-var layout = d3.layout.chord()
-    .padding(.04)
-    .sortSubgroups(d3.descending)
-    .sortChords(d3.ascending);
-
-var path = d3.svg.chord()
-    .radius(innerRadius);
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("id", "circle")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-svg.append("circle")
-    .attr("r", outerRadius);
-
-d3.csv("sharecounts.csv", function(sharecounts) {
-  d3.json("matrix.json", function(matrix) {
-
-    // Compute the chord layout.
-    layout.matrix(matrix);
-
-    // Add a group per social media.
-    var group = svg.selectAll(".group")
-        .data(layout.groups)
-      .enter().append("g")
-        .attr("class", "group")
-        .on("mouseover", mouseover);
-
-    // Add a mouseover title.
-    group.append("title").text(function(d, i) {
-      return sharecounts[i].name + ": " + formatPercent(d.value) + " of origins";
-    });
-
-    // Add the group arc.
-    var groupPath = group.append("path")
-        .attr("id", function(d, i) { return "group" + i; })
-        .attr("d", arc)
-        .style("fill", function(d, i) { return sharecounts[i].color; });
-
-    // Add a text label.
-    var groupText = group.append("text")
-        .attr("x", 6)
-        .attr("dy", 15);
-
-    groupText.append("textPath")
-        .attr("xlink:href", function(d, i) { return "#group" + i; })
-        .text(function(d, i) { return sharecounts[i].name; });
-
-    // Remove the labels that don't fit. :(
-    groupText.filter(function(d, i) { return groupPath[0][i].getTotalLength() / 2 - 16 < this.getComputedTextLength(); })
-        .remove();
-
-    // Add the chords.
-    var chord = svg.selectAll(".chord")
-        .data(layout.chords)
-      .enter().append("path")
-        .attr("class", "chord")
-        .style("fill", function(d) { return sharecounts[d.source.index].color; })
-        .attr("d", path);
-
-    // Add an elaborate mouseover title for each chord.
-    chord.append("title").text(function(d) {
-    return sharecounts[d.source.index].name
-         + " → " + sharecounts[d.target.index].name
-         + ": " + formatPercent(d.source.value)
-         + "\n" + sharecounts[d.target.index].name
-         + " → " + sharecounts[d.source.index].name
-         + ": " + formatPercent(d.target.value);
-    });
-
-    function mouseover(d, i) {
-      chord.classed("fade", function(p) {
-        return p.source.index != i
-            && p.target.index != i;
-      });
-    }
-  });
-});
-</script>
-
+      <div class="row">
+  	   <div class="small-4 large-12 large-centered columns ">
+  	      <h5 id ="rogue">Select Social Networks</h5>
+        </div>
+      </div>
+      <div class = "row">
+        <div class="small-4 large-12 large-centered columns ">
+          <table id = "Networks">
+            <tr><td class ="td_class"><input id="linkedin" type="checkbox"> <label for="linkedin">LinkedIn</label></td></tr>
+            <tr><td class ="td_class"><input id="twitter" type="checkbox"> <label for="twitter">Twitter</label></td></tr>
+            <tr><td class ="td_class"><input id="facebook" type="checkbox"> <label for="facebook">Facebook</label></td></tr>
+            <tr><td class ="td_class"><input id="google" type="checkbox"> <label for="google">Google +</label></td></tr>
+          </table>
+        </div>
+      </div>
+      <!--News Headers-->
+      <div class="row">
+        <div class="small-4 large-12 large-centered columns ">
+          <h5 id ="rogue">News Outlets</h5>
+        </div>
+      </div>
+      <div class = "row">
+        <div class="small-4 large-12 large-centered columns ">
+          <table id = "News">
+            <tr>
+              <td class ="td_class"><input id="jazeera" type="checkbox"><label for="jazeera">Al Jazeera</label></td>
+              <td class ="td_class"><input id="bloomberg" type="checkbox"><label for="bloomberg">Bloomberg</label></td>        
+            </tr>
+            <tr>
+              <td class ="td_class"><input id="bbc" type="checkbox"><label for="bbc">BBC</label></td>
+              <td class ="td_class"><input id="engadet" type="checkbox"><label for="engadget">Engadget</label></td>        
+            </tr>
+            <tr>
+              <td class ="td_class"><input id="espn" type="checkbox"><label for="espn">ESPN</label></td> 
+              <td class ="td_class"><input id="forbes" type="checkbox"><label for="forbes">Forbes</label></td>     
+            </tr>
+            <tr>
+              <td class ="td_class"><input id="fox" type="checkbox"><label for="fox">Fox News</label></td>
+              <td class ="td_class"><input id="gizmodo" type="checkbox"><label for="gizmodo">Gizmodo</label></td>    
+            </tr>
+            <tr>
+              <td class ="td_class"><input id="hpost" type="checkbox"><label for="hpost">Huffington Post</label></td>
+              <td class ="td_class"><input id="mashable" type="checkbox"><label for="mashable">Mashable</label></td> 
+            </tr>
+            <tr>
+              <td class ="td_class"><input id="onion" type="checkbox"><label for="onion">The Onion</label></td>
+              <td class ="td_class"><input id="reuters" type="checkbox"><label for="reuters">Reuters</label></td>        
+            </tr>
+            <tr>
+              <td class ="td_class"><input id="techcrunch" type="checkbox"><label for="techcrunch">Techcrunch</label></td>
+              <td class ="td_class"><input id="time" type="checkbox"><label for="time">TIME</label></td>          
+            </tr>
+            <tr>
+              <td class ="td_class"><input id="usa" type="checkbox"><label for="usa">USA Today</label> </td>
+              <td class ="td_class"><input id="venture" type="checkbox"><label for="venture">VentureBeat</label></td> 
+            </tr>
+          </table>
+        </div>
+      </div>
   </div>
 </html>
